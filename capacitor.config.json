@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "capacitor-gmap-on-device-issue",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

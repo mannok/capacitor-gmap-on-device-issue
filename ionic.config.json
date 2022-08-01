@@ -1,0 +1,7 @@
+{
+  "name": "capacitor-gmap-on-device-issue",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
