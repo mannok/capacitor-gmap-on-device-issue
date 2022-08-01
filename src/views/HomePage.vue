@@ -5,25 +5,23 @@
         <ion-title>Blank</ion-title>
       </ion-toolbar>
     </ion-header>
-    
+
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">Blank</ion-title>
         </ion-toolbar>
       </ion-header>
-    
-      <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div>
+
+      <capacitor-google-map id="map"></capacitor-google-map>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
+import { GoogleMap } from '@capacitor/google-maps';
 
 export default defineComponent({
   name: 'HomePage',
@@ -33,36 +31,38 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar
+  },
+  setup: () => {
+    onMounted(async () => {
+      const apiKey = 'YOUR_API_KEY_HERE';
+
+      const mapRef = document.getElementById('map');
+
+      const newMap = await GoogleMap.create({
+        id: 'my-map', // Unique identifier for this map instance
+        element: mapRef!, // reference to the capacitor-google-map element
+        apiKey: apiKey, // Your Google Maps API Key
+        config: {
+          center: {
+            // The initial position to be rendered by the map
+            lat: 33.6,
+            lng: -117.9,
+          },
+          zoom: 8, // The initial zoom level to be rendered by the map
+        },
+      });
+    });
   }
 });
 </script>
 
 <style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+  ion-content {
+    --ion-background-color: transparent;
+  }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
+  #map {
+    display: block;
+    height: 400px;
+  }
 </style>
